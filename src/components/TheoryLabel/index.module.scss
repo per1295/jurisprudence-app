@@ -1,0 +1,13 @@
+@use "/src/variables.scss" as v;
+
+.theory_label {
+    margin: .8rem 0;
+    color: v.$white;
+    font-family: Inter;
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0%;
+    text-align: center;
+    word-break: break-all;
+}

@@ -1,0 +1,13 @@
+@use "/src/variables.scss" as v;
+
+.theory {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 45%;
+    background-color: v.$black;
+    color: v.$white;
+    padding: 1rem .2rem;
+}

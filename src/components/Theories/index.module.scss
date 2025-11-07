@@ -1,0 +1,16 @@
+.theories {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 100vh;
+
+    @supports(height: 100dvh) {
+        height: 100dvh;
+    }
+
+    .piece {
+        width: 3rem;
+    }
+}

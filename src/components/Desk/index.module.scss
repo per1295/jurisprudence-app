@@ -1,0 +1,26 @@
+@use "/src/variables.scss" as v;
+@use "/src/mixins.scss" as m;
+
+.deskboard {
+    height: 100%;
+    width: 100%;
+    background-color: v.$white;
+  
+    background-image: 
+        // Основной шахматный узор
+        linear-gradient(45deg, v.$black 25%, transparent 25%),
+        linear-gradient(-45deg, v.$black 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, v.$black 75%),
+        linear-gradient(-45deg, transparent 75%, v.$black 75%);
+
+    @include m.deskboard(v.$desk_cell_mobile_tiny);
+    
+    @include m.mobile() {
+        @include m.deskboard(v.$desk_cell_mobile);
+    }
+
+    @supports (height: 100dvh) {
+        height: 100dvh;
+        width: 100dvw;
+    }
+}
