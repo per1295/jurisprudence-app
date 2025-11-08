@@ -12,5 +12,14 @@
 
     .piece {
         width: 3rem;
+        transition-property: filter;
+        transition-duration: .5s;
+        transition-timing-function: ease-in;
+        filter: blur(0);
+    }
+
+    .piece_transition {
+        transition-timing-function: ease-out;
+        filter: blur(1rem);
     }
 }

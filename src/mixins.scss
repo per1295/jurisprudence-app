@@ -14,6 +14,16 @@
         -$size 0;
 }
 
+@mixin theme_to_light() {
+    transition-timing-function: ease-out;
+}
+
+@mixin theme_start_dark() {
+    transition-property: background-color, background-image, color, filter, opacity;
+    transition-duration: .5s;
+    transition-timing-function: ease-in;
+}
+
 @mixin mobile() {
     @media screen and (min-width: 576px) {
         @content;

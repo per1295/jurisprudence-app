@@ -1,8 +1,17 @@
 @use "/src/variables.scss" as v;
+@use "/src/mixins.scss" as m;
 
 .theory_container {
     background-color: v.$gray;
     border-radius: 5px;
     width: 80%;
     height: 80px;
+
+    @include m.theme_start_dark();
+}
+
+.theory_container_light {
+    background-color: v.$black;
+
+    @include m.theme_to_light();
 }

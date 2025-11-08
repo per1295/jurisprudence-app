@@ -13,6 +13,8 @@
         linear-gradient(45deg, transparent 75%, v.$black 75%),
         linear-gradient(-45deg, transparent 75%, v.$black 75%);
 
+    @include m.theme_start_dark();
+
     @include m.deskboard(v.$desk_cell_mobile_tiny);
     
     @include m.mobile() {
@@ -23,4 +25,18 @@
         height: 100dvh;
         width: 100dvw;
     }
+}
+
+.deskboard_light {
+    background-color: v.$black;
+    transition-timing-function: ease-out;
+
+    background-image: 
+        // Основной шахматный узор
+        linear-gradient(45deg, v.$white 25%, transparent 25%),
+        linear-gradient(-45deg, v.$white 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, v.$white 75%),
+        linear-gradient(-45deg, transparent 75%, v.$white 75%);
+
+    @include m.theme_to_light();
 }
