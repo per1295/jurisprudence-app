@@ -26,6 +26,7 @@ export default function Score({ shownScore }: IProps) {
     const score_label_className = `${styles.score_label} ${isSuccess ? styles.score_success_color : styles.score_fail_color}`;
     const score_completed_className = `${styles.score_completed} ${isSuccess ? styles.score_success_color : styles.score_fail_color}`;
     const score_tip_className = `${styles.score_tip} ${isSuccess ? styles.score_tip_success : styles.score_tip_fail}`;
+    const score_tip_button_className = `${styles.score_tip_button} ${isSuccess ? styles.score_tip_button_success : styles.score_tip_button_fail}`;
 
     const score_arr = isSuccess ? SUCCESS : FAIL;
     const score_tip_content = isSuccess ? "Молодец!" : "Старайся лучше!";
@@ -48,12 +49,15 @@ export default function Score({ shownScore }: IProps) {
                     {isSuccess ? "Успех" : "Неудача"}
                 </span>
                 <span className={score_completed_className}>
-                    Выполненно {score.access} из {score.total} ({Math.floor((score.access ?? 0) * 100 / score.total)}%)
+                    Правильно {score.access} из {score.total} ({Math.floor((score.access ?? 0) * 100 / score.total)}%)
                 </span>
                 <Image src={`/${score_arr[2]}.png`} alt={score_arr[2]} className={styles.score_statistics_img} />
             </div>
             <span className={score_tip_className}>
                 {score_tip_content}
+                <button className={score_tip_button_className}>
+                    Попробовать еще раз
+                </button>
             </span>
         </div>
     )

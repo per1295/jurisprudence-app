@@ -13,6 +13,6 @@ export default function ChangeThemeButton() {
     }
 
     return(
-        <button className={styles.change_theme} onClick={onClick}>Click</button>
+        <div className={styles.change_theme} onClick={onClick}>Click</div>
     )
 }

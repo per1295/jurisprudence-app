@@ -52,7 +52,7 @@ export default function TheoriesContent() {
     const zIndex = useRef(2);
 
     return(
-        <div className={styles.theories_content}>
+        <div data-statements-container={true} className={styles.theories_content}>
             {STATEMENTS.map(
                 (statement, index) => (
                     <Statement key={index} theory={statement.theory} zIndex={zIndex}>{statement.value}</Statement>

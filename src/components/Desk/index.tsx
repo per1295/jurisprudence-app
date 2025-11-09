@@ -27,7 +27,7 @@ export default function Desk() {
                         .forEach(statement => {
                             const statement_theory = statement.dataset.theory?.toLowerCase();
                             const conteineiner_theory = container.dataset.theory?.toLowerCase();
-
+                            console.log("Count");
                             if ( statement_theory === conteineiner_theory ) {
                                 setScore(score => ({...score, access: (score.access ?? 0) + 1}));
                             }

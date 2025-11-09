@@ -19,16 +19,32 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
     const [isDraggingStart, setIsDraggingStart] = useState(false);
     const [startTouchCoords, setStartTouchCoords] = useState({x: 0, y: 0});
     const [prevStatementRectTop, setPrevStatementRectTop] = useState<number | null>(null);
-
+    const startPositionalCoords = useRef({x: 0, y: 0});
+    
     const statement_ref = useRef<HTMLSpanElement>(null);
     const timeout_ref = useRef<ReturnType<typeof setTimeout>>(null);
 
     const onTouchStart = useEffectEvent((event: TouchEvent) => {
-        console.log("Start");
         event.preventDefault();
 
         const touch = event.touches[0];
         const statement = event.currentTarget as HTMLSpanElement;
+
+        if ( statement.parentElement?.dataset.theory ) {
+            setCSSStyles(statement, {
+                position: "absolute",
+                top: startPositionalCoords.current.y + "px",
+                left: startPositionalCoords.current.x + "px",
+                fontSize: "1.2rem"
+            });
+            removeCSSStyles(statement, ["width"]);
+
+            const statements_container = document.querySelector("[data-statements-container]") as HTMLDivElement;
+            statements_container.append(statement);
+
+            return;
+        }
+
         const { top, left } = statement.getBoundingClientRect();
 
         setIsDraggingStart(true);
@@ -66,15 +82,33 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
         });
 
         // Прокрутка документа при переносе элемента
-           if ( timeout_ref.current ) clearTimeout(timeout_ref.current);
+        if ( timeout_ref.current ) clearTimeout(timeout_ref.current);
 
-        if ( prevStatementRectTop && Math.floor(prevStatementRectTop - top_client) >= 20 ) {
+        if (
+            prevStatementRectTop &&
+            Math.floor(prevStatementRectTop - top_client) >= 10 &&
+            top_client > 100
+        ) {
             timeout_ref.current = setTimeout(() => {
                 document.documentElement.scrollBy(0, -20);
+
+                const { top } = getComputedStyle(statement);
+                setCSSStyles(statement, {
+                    top: parseFloat(top) - 20 + "px"
+                })
             }, 10);
-        } else if ( prevStatementRectTop && Math.floor(prevStatementRectTop - top_client) <= -20 ) {
+        } else if (
+            prevStatementRectTop &&
+            Math.floor(prevStatementRectTop - top_client) <= -10 &&
+            window.innerHeight - top_client - statement.offsetHeight > 100
+        ) {
             timeout_ref.current = setTimeout(() => {
                 document.documentElement.scrollBy(0, 20);
+
+                const { top } = getComputedStyle(statement);
+                setCSSStyles(statement, {
+                    top: parseFloat(top) + 20 + "px"
+                })
             }, 10);
         }
 
@@ -82,7 +116,8 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
     })
 
     const onTouchEnd = useEffectEvent((event: TouchEvent) => {
-        event.preventDefault();
+        if ( !isDraggingStart ) return;
+        // event.preventDefault();
         setIsDraggingStart(false);
 
         // Получаем контейнер теории
@@ -132,6 +167,7 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
             const parent_container = statement.parentElement as HTMLDivElement;
             const x = random(parent_container.clientWidth / 3) + statement.offsetWidth / 10;
             const y = random(parent_container.clientHeight / 2) + statement.offsetHeight / 2;
+            startPositionalCoords.current = {x, y};
 
             setCSSStyles(statement, {
                 top: y + "px",

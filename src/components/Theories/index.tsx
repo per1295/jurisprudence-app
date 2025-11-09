@@ -35,9 +35,9 @@ export default function Theories() {
     const theories_ref = useRef<HTMLDivElement>(null);
 
     const onTransitionEnd: TransitionEventHandler = event => {
+        event.preventDefault();
         const image = event.currentTarget as HTMLImageElement;
         image.classList.remove(styles.piece_transition);
-        console.log("End");
     }
 
     useEffect(() => {

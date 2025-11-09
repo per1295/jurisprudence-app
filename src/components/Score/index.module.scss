@@ -7,7 +7,7 @@
     transition-property: opacity;
     transition-duration: .5s;
     transition-timing-function: ease-in;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -101,12 +101,13 @@
 
 .score_tip {
     font-family: Inter;
-    font-size: 2rem;
+    font-size: 1.4rem;
     font-weight: 400;
     letter-spacing: 0%;
     text-align: center;
     padding: 1.2rem;
     word-break: break-all;
+    max-width: 80%;
 }
 
 .score_tip_success {
@@ -117,4 +118,29 @@
 .score_tip_fail {
     background-color: v.$fail;
     color: v.$white;
+}
+
+.score_tip_button {
+    width: 80%;
+    color: inherit;
+    transition-property: color, background-color;
+    transition-duration: .5s;
+    border: 5px solid v.$white;
+    font-size: 1rem;
+
+    &:hover {
+        background-color: v.$white;
+    }
+}
+
+.score_tip_button_success {
+    &:hover {
+        color: v.$success;
+    }
+}
+
+.score_tip_button_fail {
+    &:hover {
+        color: v.$fail;
+    }
 }
