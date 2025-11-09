@@ -18,6 +18,14 @@ const THEORY_NAMES = [
     "Насилия",
     "Патриархальная"
 ];
+const THEORIES_VALUES = [
+    "Contractual",
+    "Theological",
+    "Psychological",
+    "Materialistic",
+    "Violence",
+    "Patriarchal"
+];
 
 export default function Theories() {
     const theme = useContext(ThemeContext);
@@ -49,7 +57,7 @@ export default function Theories() {
             {pieces.map(
                 (piece, index) => {
                     return(
-                        <Theory key={index} theory_name={THEORY_NAMES[index]}>
+                        <Theory key={index} theory_name={THEORY_NAMES[index]} theory_value={THEORIES_VALUES[index]}>
                             <Image src={`/${piece}.png`} alt={piece} className={styles.piece} onTransitionEnd={onTransitionEnd}/>
                         </Theory>
                     )

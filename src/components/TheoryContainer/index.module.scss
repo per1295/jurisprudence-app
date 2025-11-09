@@ -5,7 +5,10 @@
     background-color: v.$gray;
     border-radius: 5px;
     width: 80%;
-    height: 80px;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     @include m.theme_start_dark();
 }

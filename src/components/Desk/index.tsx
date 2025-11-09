@@ -1,6 +1,8 @@
 import styles from "./index.module.scss";
 
 import Theories from "../Theories";
+import TheoriesContent from "../TheoriesContent";
+
 import { ThemeContext } from "../../contexts";
 import { useContext } from "react";
 
@@ -11,6 +13,7 @@ export default function Desk() {
     return(
         <main className={className}>
             <Theories />
+            <TheoriesContent />
         </main>
     )
 }

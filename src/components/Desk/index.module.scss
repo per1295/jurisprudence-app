@@ -2,9 +2,11 @@
 @use "/src/mixins.scss" as m;
 
 .deskboard {
-    height: 100%;
+    position: relative;
     width: 100%;
     background-color: v.$white;
+    padding-bottom: 1.5rem;
+    overflow-x: hidden;
   
     background-image: 
         // Основной шахматный узор
@@ -22,7 +24,6 @@
     }
 
     @supports (height: 100dvh) {
-        height: 100dvh;
         width: 100dvw;
     }
 }

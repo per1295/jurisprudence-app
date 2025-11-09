@@ -1,4 +1,5 @@
 import "./reset.scss";
+import "./index.scss";
 
 import Desk from "./components/Desk";
 import ChangeThemeButton from "./components/ChangeThemeButton";

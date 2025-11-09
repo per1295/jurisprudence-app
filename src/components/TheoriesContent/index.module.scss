@@ -1,0 +1,12 @@
+.theories_content {
+    position: relative;
+    margin-top: 1.2rem;
+    max-width: 100vw;
+    min-width: 100vw;
+    min-height: 300px;
+
+    @supports (max-width: 100dvw) {
+        max-width: 100dvw;
+        min-width: 100dvw;
+    }
+}

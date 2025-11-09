@@ -7,6 +7,8 @@ export type WithChildren<Props = object> = {
 export type GameTheme = "dark" | "light";
 
 export interface IGameTheme {
-    value: GameTheme
+    value: GameTheme;
     prevValue: GameTheme | null;
 }
+
+export type Theory = "Contractual" | "Theological" | "Psychological" | "Materialistic" | "Violence" | "Patriarchal";

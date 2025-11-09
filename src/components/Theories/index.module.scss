@@ -4,11 +4,7 @@
     align-items: flex-start;
     justify-content: space-between;
     flex-wrap: wrap;
-    height: 100vh;
-
-    @supports(height: 100dvh) {
-        height: 100dvh;
-    }
+    row-gap: 1.2rem;
 
     .piece {
         width: 3rem;

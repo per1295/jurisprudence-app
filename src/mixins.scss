@@ -19,7 +19,7 @@
 }
 
 @mixin theme_start_dark() {
-    transition-property: background-color, background-image, color, filter, opacity;
+    transition-property: background-color, background-image, color, filter, opacity, border;
     transition-duration: .5s;
     transition-timing-function: ease-in;
 }

@@ -1,0 +1,31 @@
+@use "/src/variables.scss" as v;
+@use "/src/mixins.scss" as m;
+
+.statement {
+    position: absolute;
+    display: block;
+    border: 8px solid v.$gray;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 60%;
+
+    background-color: v.$black;
+    color: v.$white;
+    font-family: Inter;
+    font-size: 1.2rem;
+    font-weight: bold;
+    line-height: normal;
+    letter-spacing: 0%;
+    text-align: center;
+    word-break: break-all;
+
+    @include m.theme_start_dark();
+}
+
+.statement_light {
+    background-color: v.$white;
+    color: v.$black;
+    border: 8px solid v.$white;
+
+    @include m.theme_to_light();
+}
