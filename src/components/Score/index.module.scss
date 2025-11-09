@@ -1,0 +1,120 @@
+@use "/src/variables.scss" as v;
+@use "/src/mixins.scss" as m;
+
+.score {
+    display: none;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: .5s;
+    transition-timing-function: ease-in;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+
+    @include m.deskboard(v.$desk_cell_mobile_tiny);
+}
+
+.score_appear {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem 0;
+    opacity: 1;
+}
+
+.score_success {
+    background-color: v.$success_ceil_white;
+    background-image: 
+        // Основной шахматный узор
+        linear-gradient(45deg, v.$success_ceil_black 25%, transparent 25%),
+        linear-gradient(-45deg, v.$success_ceil_black 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, v.$success_ceil_black 75%),
+        linear-gradient(-45deg, transparent 75%, v.$success_ceil_black 75%);
+
+    
+}
+
+.score_fail {
+    background-color: v.$fail_ceil_white;
+    background-image: 
+        // Основной шахматный узор
+        linear-gradient(45deg, v.$fail_ceil_black 25%, transparent 25%),
+        linear-gradient(-45deg, v.$fail_ceil_black 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, v.$fail_ceil_black 75%),
+        linear-gradient(-45deg, transparent 75%, v.$fail_ceil_black 75%);
+}
+
+.score_statistics {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    width: 80vw;
+    height: 80vw;
+    background-color: v.$white;
+    border-radius: 50%;
+}
+
+.score_statistics_success {
+    border: 20px solid v.$success;
+}
+
+.score_statistics_fail {
+    border: 20px solid v.$fail;
+}
+
+.score_statistics_img {
+    width: 50px;
+}
+
+.score_label {
+    font-family: Inter;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0%;
+    text-align: center;
+    word-break: break-all;
+}
+
+.score_success_color {
+    color: v.$success;
+}
+
+.score_fail_color {
+    color: v.$fail;
+}
+
+.score_completed {
+    font-family: Inter;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 0%;
+    text-align: center;
+    word-break: break-all;
+}
+
+.score_tip {
+    font-family: Inter;
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0%;
+    text-align: center;
+    padding: 1.2rem;
+    word-break: break-all;
+}
+
+.score_tip_success {
+    background-color: v.$success;
+    color: v.$white;
+}
+
+.score_tip_fail {
+    background-color: v.$fail;
+    color: v.$white;
+}

@@ -98,10 +98,11 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
 
             if ( theory_container ) {
                 setCSSStyles(statement, {
+                    position: "static",
                     width: "80%",
                     fontSize: "1rem"
                 });
-                removeCSSStyles(statement, ["position", "top", "left"]);
+                removeCSSStyles(statement, ["top", "left"]);
 
                 theory_container.append(statement);
             }

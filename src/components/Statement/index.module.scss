@@ -4,7 +4,7 @@
 .statement {
     position: absolute;
     display: block;
-    border: 8px solid v.$gray;
+    border: 8px solid v.$white;
     border-radius: 8px;
     padding: 1rem;
     width: 60%;
@@ -25,7 +25,7 @@
 .statement_light {
     background-color: v.$white;
     color: v.$black;
-    border: 8px solid v.$white;
+    border: 8px solid v.$gray;
 
     @include m.theme_to_light();
 }
