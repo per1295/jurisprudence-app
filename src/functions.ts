@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import type { AnyFunc } from "./types";
 
 export function shuffle<ItemType>(list: ItemType[]): ItemType[] {
     const copy = [...list];
@@ -29,4 +30,17 @@ export function random(x1: number, x2?: number): number {
     } else {
         return Math.floor(Math.random() * (x2 - x1 + 1)) + x1;
     }
+}
+
+export function debounce(func: AnyFunc, wait: number): AnyFunc {
+    let timeout: ReturnType<typeof setTimeout>;
+
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
 }

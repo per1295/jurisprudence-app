@@ -24,6 +24,11 @@
     justify-content: center;
     gap: 2rem 0;
     opacity: 1;
+
+    @include m.tablet() {
+        flex-direction: row;
+        gap: 0 2rem;
+    }
 }
 
 .score_success {
@@ -59,6 +64,16 @@
     height: 80vw;
     background-color: v.$white;
     border-radius: 50%;
+
+    @include m.mobile() {
+        width: 50vw;
+        height: 50vw;
+    }
+
+    @include m.desktop() {
+        max-width: 718px;
+        max-height: 718px;
+    }
 }
 
 .score_statistics_success {
@@ -71,15 +86,27 @@
 
 .score_statistics_img {
     width: 50px;
+
+    @include m.tablet() {
+        width: 80px;
+    }
 }
 
 .score_label {
     font-family: Inter;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0%;
     text-align: center;
     word-break: break-all;
+
+    @include m.mobile() {
+        font-size: 1.4rem;
+    }
+
+    @include m.desktop() {
+        font-size: 2.5rem;
+    }
 }
 
 .score_success_color {
@@ -92,11 +119,19 @@
 
 .score_completed {
     font-family: Inter;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 400;
     letter-spacing: 0%;
     text-align: center;
     word-break: break-all;
+
+    @include m.mobile() {
+        font-size: 1.4rem;
+    }
+
+    @include m.desktop() {
+        font-size: 2.5rem;
+    }
 }
 
 .score_tip {
@@ -108,6 +143,20 @@
     padding: 1.2rem;
     word-break: break-all;
     max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.2rem 0;
+
+    @include m.tablet() {
+        min-width: 40%;
+        max-width: 515px;
+    }
+
+    @include m.desktop() {
+        font-size: 2.5rem;
+    }
 }
 
 .score_tip_success {
@@ -130,6 +179,10 @@
 
     &:hover {
         background-color: v.$white;
+    }
+
+    @include m.desktop() {
+        font-size: 2.0rem;
     }
 }
 

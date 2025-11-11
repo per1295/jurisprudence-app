@@ -4,13 +4,19 @@ import Theories from "../Theories";
 import TheoriesContent from "../TheoriesContent";
 
 import { ScoreContext, ThemeContext } from "../../contexts";
-import { useContext, useRef, useEffect } from "react";
+import { useContext, useRef, useEffect, useEffectEvent } from "react";
 
 export default function Desk() {
     const theme = useContext(ThemeContext);
-    const { setScore } = useContext(ScoreContext);
+    const { score, setScore } = useContext(ScoreContext);
     const className = `${styles.deskboard} ${theme.value === "dark" || styles.deskboard_light}`;
     const desk_ref = useRef<HTMLElement>(null);
+
+    const zeroAccessHandler = useEffectEvent(() => {
+        if ( score.access === null ) {
+            setScore(s => ({ ...s, access: 0 }));
+        }
+    });
 
     useEffect(() => {
         const desk = desk_ref.current as HTMLElement;
@@ -27,12 +33,14 @@ export default function Desk() {
                         .forEach(statement => {
                             const statement_theory = statement.dataset.theory?.toLowerCase();
                             const conteineiner_theory = container.dataset.theory?.toLowerCase();
-                            console.log("Count");
+
                             if ( statement_theory === conteineiner_theory ) {
                                 setScore(score => ({...score, access: (score.access ?? 0) + 1}));
                             }
                         });
                 }
+
+                zeroAccessHandler();
             }
         });
 
@@ -41,7 +49,7 @@ export default function Desk() {
         return () => {
             observer.disconnect();
         }
-    }, [setScore]);
+    }, [setScore, zeroAccessHandler]);
 
     return(
         <main ref={desk_ref} className={className}>

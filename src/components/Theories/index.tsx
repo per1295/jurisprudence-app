@@ -29,6 +29,7 @@ const THEORIES_VALUES = [
 
 export default function Theories() {
     const theme = useContext(ThemeContext);
+
     const pieces = CHESS_PIECES.map(piece => {
         return `${piece}_${theme.value === "light" ? "Black" : "White"}`
     });

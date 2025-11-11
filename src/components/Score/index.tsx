@@ -40,6 +40,10 @@ export default function Score({ shownScore }: IProps) {
         }
     }, [ shownScore ]);
 
+    function restartGame() {
+        location.reload()
+    }
+
     return(
         <div className={score_className}>
             <div className={score_statics_className}>
@@ -55,7 +59,7 @@ export default function Score({ shownScore }: IProps) {
             </div>
             <span className={score_tip_className}>
                 {score_tip_content}
-                <button className={score_tip_button_className}>
+                <button className={score_tip_button_className} onClick={restartGame}>
                     Попробовать еще раз
                 </button>
             </span>

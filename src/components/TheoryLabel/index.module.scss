@@ -13,6 +13,10 @@
     word-break: break-all;
 
     @include m.theme_start_dark();
+
+    @include m.tablet() {
+        max-width: calc(80% - 100px);
+    }
 }
 
 .theory_label_light {

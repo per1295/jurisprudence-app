@@ -1,7 +1,31 @@
+@use "/src/mixins.scss" as m;
+@use "/src/variables.scss" as v;
+
 .change_theme {
     position: fixed;
-    top: 0;
-    left: calc(50% - 20px);
+    top: 2%;
+    right: 0;
     width: 40px;
-    background: white;
+    background-color: v.$night;
+    transition-property: filter;
+    transition-duration: .5s;
+    transition-timing-function: ease-in;
+    filter: blur(0);
+
+    @include m.theme_start_dark();
+
+    @include m.tablet() {
+        width: 80px;
+    }
+}
+
+.change_theme_transition {
+    transition-timing-function: ease-out;
+    filter: blur(1rem);
+}
+
+.change_theme_light {
+    background-color: v.$sun;
+
+    @include m.theme_to_light();
 }

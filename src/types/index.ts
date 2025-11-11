@@ -22,3 +22,8 @@ export interface IScoreCtx {
     score: IScore;
     setScore: Dispatch<SetStateAction<IScore>>;
 }
+
+export type WindowSizeType = "mobile_tiny" | "mobile" | "tablet" | "desktop";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyFunc= (...args: any[]) => any;

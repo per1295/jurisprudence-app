@@ -24,11 +24,18 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
     const statement_ref = useRef<HTMLSpanElement>(null);
     const timeout_ref = useRef<ReturnType<typeof setTimeout>>(null);
 
-    const onTouchStart = useEffectEvent((event: TouchEvent) => {
+    const onStart = useEffectEvent((event: TouchEvent | MouseEvent) => {
         event.preventDefault();
 
-        const touch = event.touches[0];
-        const statement = event.currentTarget as HTMLSpanElement;
+        let touch: Touch | MouseEvent;
+
+        if ( event.type === "touchstart" ) {
+            touch = (event as TouchEvent).touches[0];
+        } else {
+            touch = event as MouseEvent;
+        }
+
+        const statement = statement_ref.current as HTMLSpanElement;
 
         if ( statement.parentElement?.dataset.theory ) {
             setCSSStyles(statement, {
@@ -66,63 +73,90 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
         zIndex.current++;
     })
 
-    const onTouchMove = useEffectEvent((event: TouchEvent) => {
-        if ( !isDraggingStart ) return;
-        event.preventDefault();
+    const onMove = useEffectEvent((event: TouchEvent | MouseEvent) => {
+        requestAnimationFrame(() => {
+            if ( !isDraggingStart ) return;
+            event.preventDefault();
 
-        const statement = event.currentTarget as HTMLSpanElement;
-        const { top: top_client, left: left_client } = statement.getBoundingClientRect();
-        const touch = event.touches[0];
-        const top = statement.offsetTop + (touch.clientY - top_client) - startTouchCoords.y + "px";
-        const left = statement.offsetLeft + (touch.clientX - left_client) - startTouchCoords.x + "px";
+            const statement = statement_ref.current as HTMLSpanElement;
+            const { top: top_client, left: left_client } = statement.getBoundingClientRect();
+            
+            let touch: Touch | MouseEvent;
 
-        setCSSStyles(statement, {
-            top,
-            left
+            if ( event.type === "touchmove" ) {
+                touch = (event as TouchEvent).touches[0];
+            } else {
+                touch = event as MouseEvent;
+            }
+
+            const top = statement.offsetTop + (touch.clientY - top_client) - startTouchCoords.y + "px";
+            const left = statement.offsetLeft + (touch.clientX - left_client) - startTouchCoords.x + "px";
+
+            setCSSStyles(statement, {
+                top,
+                left
+            });
+
+            // Прокрутка документа при переносе элемента
+            if ( timeout_ref.current ) {
+                clearTimeout(timeout_ref.current);
+                timeout_ref.current = null;
+            }
+
+            const moving = 10;
+
+            if (
+                prevStatementRectTop &&
+                Math.floor(prevStatementRectTop - top_client) >= 3 &&
+                document.documentElement.scrollTop !== 0
+            ) {
+                timeout_ref.current = setTimeout(() => {
+                    document.documentElement.scrollBy(0, -moving);
+
+                    const { top } = getComputedStyle(statement);
+                    setCSSStyles(statement, {
+                        top: parseFloat(top) - moving + "px"
+                    });
+                    // setPrevStatementRectTop(top_client);
+                }, 0);
+            } else if (
+                prevStatementRectTop &&
+                Math.floor(prevStatementRectTop - top_client) <= -3 &&
+                document.documentElement.scrollTop + top_client < document.documentElement.scrollHeight - 480
+            ) {
+                timeout_ref.current = setTimeout(() => {
+                    document.documentElement.scrollBy(0, moving);
+
+                    const { top } = getComputedStyle(statement);
+                    setCSSStyles(statement, {
+                        top: parseFloat(top) + moving + "px"
+                    });
+                    // setPrevStatementRectTop(top_client);
+                }, 0);
+            }
+
+            setPrevStatementRectTop(top_client);
         });
-
-        // Прокрутка документа при переносе элемента
-        if ( timeout_ref.current ) clearTimeout(timeout_ref.current);
-
-        if (
-            prevStatementRectTop &&
-            Math.floor(prevStatementRectTop - top_client) >= 10 &&
-            top_client > 100
-        ) {
-            timeout_ref.current = setTimeout(() => {
-                document.documentElement.scrollBy(0, -20);
-
-                const { top } = getComputedStyle(statement);
-                setCSSStyles(statement, {
-                    top: parseFloat(top) - 20 + "px"
-                })
-            }, 10);
-        } else if (
-            prevStatementRectTop &&
-            Math.floor(prevStatementRectTop - top_client) <= -10 &&
-            window.innerHeight - top_client - statement.offsetHeight > 100
-        ) {
-            timeout_ref.current = setTimeout(() => {
-                document.documentElement.scrollBy(0, 20);
-
-                const { top } = getComputedStyle(statement);
-                setCSSStyles(statement, {
-                    top: parseFloat(top) + 20 + "px"
-                })
-            }, 10);
-        }
-
-        setPrevStatementRectTop(top_client);
     })
 
-    const onTouchEnd = useEffectEvent((event: TouchEvent) => {
+    const onEnd = useEffectEvent((event: TouchEvent | MouseEvent) => {
         if ( !isDraggingStart ) return;
-        // event.preventDefault();
         setIsDraggingStart(false);
 
+        if ( timeout_ref.current ) {
+            clearTimeout(timeout_ref.current);
+            timeout_ref.current = null;
+        }
+
         // Получаем контейнер теории
-        const statement = event.currentTarget as HTMLSpanElement;
-        const touch = event.changedTouches[0];
+        const statement = statement_ref.current as HTMLSpanElement;
+        let touch: Touch | MouseEvent;
+
+        if ( event.type === "touchend" ) {
+            touch = (event as TouchEvent).changedTouches[0];
+        } else {
+            touch = event as MouseEvent;
+        }
 
         setCSSStyles(statement, { display: "none" });
         const elem = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -148,16 +182,26 @@ export default function Statement({ children, theory, zIndex }: WithChildren<IPr
     useEffect(() => {
         const statement = statement_ref.current as HTMLSpanElement;
 
-        statement.addEventListener("touchstart", onTouchStart, {passive: false});
-        statement.addEventListener("touchmove", onTouchMove, {passive: false});
-        statement.addEventListener("touchend", onTouchEnd, {passive: false});
+        // Обработчики мобильных устройств и планшетов
+        statement.addEventListener("touchstart", onStart, {passive: false});
+        statement.addEventListener("touchend", onEnd, {passive: false});
+        document.addEventListener("touchmove", onMove, {passive: false});
+
+        // Обработчики мыши
+        statement.addEventListener("mousedown", onStart, {passive: false});
+        statement.addEventListener("mouseup", onEnd, {passive: false});
+        document.addEventListener("mousemove", onMove, {passive: false});
 
         return () => {
-            statement.removeEventListener("touchstart", onTouchStart);
-            statement.removeEventListener("touchmove", onTouchMove);
-            statement.removeEventListener("touchend", onTouchEnd);
+            statement.removeEventListener("touchstart", onStart);
+            statement.removeEventListener("touchend", onEnd);
+            document.removeEventListener("touchmove", onMove);
+
+            statement.removeEventListener("mousedown", onStart,);
+            statement.removeEventListener("mouseup", onEnd);
+            document.removeEventListener("mousemove", onMove);
         }
-    }, [onTouchEnd, onTouchMove, onTouchStart]);
+    }, [onEnd, onMove, onStart]);
 
     // Расположение statement в случайных координатах
     useLayoutEffect(() => {
