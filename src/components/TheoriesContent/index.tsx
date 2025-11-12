@@ -214,7 +214,7 @@ const PERSONS: IPerson[] = [
     },
     {
         type: "person",
-        theory: "Patriarchal",
+        theory: "Theological",
         image: "image_54",
         name: "Фома аквинский",
         years: "1225-1274"
