@@ -13,14 +13,19 @@
     background-color: v.$black;
     color: v.$white;
     font-family: Inter;
-    font-size: 1.2rem;
+    font-size: .8rem;
     font-weight: bold;
     line-height: normal;
     letter-spacing: 0%;
     text-align: center;
-    word-break: break-all;
+
+    overflow: hidden;
 
     @include m.theme_start_dark();
+
+    @include m.tablet() {
+        max-width: 600px;
+    }
 }
 
 .statement_light {

@@ -1,9 +1,15 @@
+@use "/src/mixins.scss" as m;
+
 .theories_content {
     position: relative;
     margin-top: 1.2rem;
     max-width: 100vw;
     min-width: 100vw;
-    min-height: 300px;
+    min-height: 500px;
+
+    @include m.tablet() {
+        min-height: 800px;
+    }
 
     @supports (max-width: 100dvw) {
         max-width: 100dvw;

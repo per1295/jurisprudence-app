@@ -45,7 +45,7 @@ export default function Theories() {
         const theories = theories_ref.current as HTMLDivElement;
 
         if ( theme.value && theme.prevValue !== null ) {
-            const images = theories.querySelectorAll("img");
+            const images = theories.querySelectorAll("section > img");
 
             for ( const image of images ) {
                 image.classList.add(styles.piece_transition);

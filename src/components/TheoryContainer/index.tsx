@@ -12,6 +12,6 @@ export default function TheoryContainer({ theory_value }: IProps) {
     const className = `${styles.theory_container} ${theme.value === "dark" || styles.theory_container_light}`;
 
     return(
-        <div data-theory={theory_value} className={className}></div>
+        <div data-container={true} data-theory={theory_value} className={className}></div>
     )
 }
