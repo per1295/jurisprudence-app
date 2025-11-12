@@ -20,7 +20,7 @@ const FAIL = [
 
 export default function Score({ shownScore }: IProps) {
     const { score } = useContext(ScoreContext);
-    const isSuccess = score.access ? Math.floor(score.access * 100 / score.total) >= 70 : false;
+    const isSuccess = score.access ? Math.floor(score.access * 100 / score.total) >= 50 : false;
     const score_className = `${styles.score} ${shownScore && styles.score_appear } ${isSuccess ? styles.score_success : styles.score_fail}`;
     const score_statics_className = `${styles.score_statistics} ${isSuccess ? styles.score_statistics_success : styles.score_statistics_fail}`;
     const score_label_className = `${styles.score_label} ${isSuccess ? styles.score_success_color : styles.score_fail_color}`;
